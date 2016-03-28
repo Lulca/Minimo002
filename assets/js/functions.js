@@ -1,15 +1,16 @@
 (function ($) {
-  'use strict';
+	'use strict';
 
-  $(document).ready(function () {
+	$(document).ready(function () {
 
+	(function (){
   	// animate button
   	$('.ninja-btn').click( function() {
-      $(this).toggleClass('active');
-    });
+  		$(this).toggleClass('active');
+  	});
 
   	// hide and show site-navigation by click
-  	function menuSlide () {
+  	(function () {
   		var $toggleNav = $('.toggle-nav');
   		var $toggleBtn = $('.toggle-btn'); 
 
@@ -31,9 +32,53 @@
   				$('.ninja-btn').removeClass('active');
   			}
   		});
-  	}
+  	}());
 
-    menuSlide ();
+  }());
+
+  // fix problem with rasponsive slider
+		(function () {
+			var widthOfContainer,
+			widthOfSlides,
+			slides = $('.slides'),
+			slideLi = slides.find('li'),
+			slideImg = slideLi.find('img');
+
+			var lengthOfSlides = slideLi.length;
+
+  		// function for initialize variables
+  		function reloadVar () {
+  			widthOfContainer = $('.container').width();
+  			widthOfSlides = widthOfContainer * lengthOfSlides;
+  		};
+
+  		reloadVar ();
+
+  		function setCssLi () {
+  			slideLi.css({'width': widthOfContainer + 'px'});
+  			slides.css({'width': widthOfSlides + 'px'});
+  		};
+
+  		setCssLi ();
+
+  		// renew variable by resizing
+
+  		$(window).resize(function() {
+  			reloadVar ();
+  			setCssLi ();
+
+  		});
+
+      // append buttons in ul.bottom-buttons
+      (function () {
+        var bottomButtons = $('.bottom-buttons');
+
+        $('<li class="button1"></li>').appendTo(bottomButtons);
+
+      }());
+
+  	}());
+
 
   }); //end ready
 

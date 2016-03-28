@@ -1,6 +1,14 @@
-//adding icon fonts, icon sprite sheets
+@font-face {
+    font-family: 'icomoon';
+    src:    url('fonts/icomoon.eot?wyhqpg');
+    src:    url('fonts/icomoon.eot?wyhqpg#iefix') format('embedded-opentype'),
+        url('fonts/icomoon.ttf?wyhqpg') format('truetype'),
+        url('fonts/icomoon.woff?wyhqpg') format('woff'),
+        url('fonts/icomoon.svg?wyhqpg#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
-//icomoon
 [class^="icon-"], [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'icomoon' !important;
@@ -31,3 +39,4 @@
 .icon-facebook:before {
     content: "\e902";
 }
+
