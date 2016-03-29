@@ -40,7 +40,8 @@
 		(function () {
 			var widthOfContainer,
 			widthOfSlides,
-			slides = $('.slides'),
+      slider = $('.slider'),
+			slides = slider.find('.slides'),
 			slideLi = slides.find('li'),
 			slideImg = slideLi.find('img');
 
@@ -73,7 +74,55 @@
       (function () {
         var bottomButtons = $('.bottom-buttons');
 
-        $('<li class="button1"></li>').appendTo(bottomButtons);
+        for ( var i = 1; i <= lengthOfSlides; i++) {
+
+          $('<li class="buttons button' +i+ '"></li>').appendTo(bottomButtons);
+        }
+
+      }());
+
+      // slider behavior
+      (function () {
+        var counterOfClick = 0;
+
+        // arrow click
+        slider.find('.leftArrow').on('click', function () {
+         counterOfClick--;
+
+         if (counterOfClick < 0) {
+          counterOfClick = lengthOfSlides-1;
+          slides.animate({
+            'margin-left': -widthOfContainer*(lengthOfSlides-1)+'px' 
+          }, 1000);
+        } else{
+          slides.animate({
+            'margin-left': '+='+widthOfContainer+ 'px' 
+          }, 1000);
+
+        }
+
+
+      });
+
+        slider.find('.rightArrow').on('click', function () {
+         counterOfClick++;
+
+         if (counterOfClick >= lengthOfSlides) {
+          counterOfClick = 0;
+          slides.animate({
+            'margin-left': '0px' 
+          }, 1000);
+        } else{
+          slides.animate({
+            'margin-left': '-='+widthOfContainer+ 'px' 
+          }, 1000);
+
+        }
+
+
+      });
+
+
 
       }());
 
