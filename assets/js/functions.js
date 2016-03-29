@@ -1,15 +1,16 @@
 (function ($) {
-  'use strict';
+	'use strict';
 
-  $(document).ready(function () {
+	$(document).ready(function () {
 
+	(function (){
   	// animate button
   	$('.ninja-btn').click( function() {
-      $(this).toggleClass('active');
-    });
+  		$(this).toggleClass('active');
+  	});
 
   	// hide and show site-navigation by click
-  	function menuSlide () {
+  	(function () {
   		var $toggleNav = $('.toggle-nav');
   		var $toggleBtn = $('.toggle-btn'); 
 
@@ -31,9 +32,10 @@
   				$('.ninja-btn').removeClass('active');
   			}
   		});
-  	}
+  	}());
 
-    menuSlide ();
+  }());
+
 
   }); //end ready
 
