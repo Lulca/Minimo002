@@ -43,7 +43,7 @@
 
 .slider {
 	overflow: hidden;
-
+	position: relative;
 
 	.slides {
 		width: 300%;
@@ -60,5 +60,47 @@
 			}
 		}	
 	}
+
+		.leftArrow {
+			position: absolute;
+			left: 0;
+			top: 0;
+			height: 100%;
+			width: 60px;
+			.transition();
+
+			.icon-arrow-circle-left {
+				position: absolute;
+				font-size: 30px;
+				left: 15px;
+				top: 45%;
+			}
+
+			&:hover {
+				opacity: .7;
+				background-color: #000;
+			}
+		}
+
+		.rightArrow {
+			position: absolute;
+			right: 0;
+			top: 0;
+			height: 100%;
+			width: 60px;
+			.transition();
+
+			.icon-arrow-circle-right {
+				position: absolute;
+				font-size: 30px;
+				right: 15px;
+				top: 45%;
+			}
+
+			&:hover {
+				opacity: .7;
+				background-color: #000;
+			}
+		}
 
 } // slider
