@@ -35,31 +35,108 @@
   				$toggleNav.show();
   				$('.ninja-btn').removeClass('active');
   			}
+
+
   		});
 
   	}()); // hide and show site-navigation by click
 
   }()); // drive nav
 
-   // fefresh widths of .slider adn li in case img > 3 (defoul number)
-   (function () {
+ 
+      var $slider = $('.slider'),
+      $slides = $slider.find('.slides'),
+      $li = $slides.find('li'),
+      liNumber = $li.length,
+      sliderWidth = $('.slider').width(),
+      $bottomButtons = $('.bottom-buttons');
 
-    var $slider = $('.slider'),
-        $slides = $slider.find('.slides'),
-        $li = $slides.find('li'),
-        liNumber = $li.length;
+    
+    if (liNumber != 3) {
+      $slides.css({'width': liNumber*100 + '%'});
+      $li.css({'width': 100/liNumber + '%'});
+    }
 
-        if (liNumber != 3) {
-          $slides.css({'width': liNumber*100 + '%'});
-          $li.css({'width': 100/liNumber + '%'});
-        }
+            // drive slider work
+            (function () {
 
-        // drive slider work
-        (function () {
+              // set data-pos in .slides li and in ul.buttom-buttons li
 
-        }()); // drive slider work
+              for ( var i = 1; i <= liNumber; i++) {
+                  if (i === 1) {
 
-   }()); // fefresh number of images of slider
+                    $('<li class="buttons active button' +i+ '"></li>').appendTo($bottomButtons);
+
+                  } else {
+
+                    $('<li class="buttons button' +i+ '"></li>').appendTo($bottomButtons);
+
+                  }
+                }
+
+                function setDataPosAttd(){
+
+                  var positionOfSlides = 0,
+                  sliderWidth = $('.slider').width();
+
+                  for (var i = 1; i <= liNumber; i++){
+
+                    $bottomButtons.find('li').eq(i-1).attr('data-pos', positionOfSlides);
+                //set data-pos fo li element of slider
+                $li.eq(i-1).attr('data-pos', positionOfSlides);
+                positionOfSlides += sliderWidth;
+
+              }
+            }
+              
+              setDataPosAttd();
+
+              $(window).resize(function(){
+                setDataPosAttd();
+              });
+
+                  var $buttonsLi = $bottomButtons.find('li');
+
+                  // change slides by click on buttons
+                  $buttonsLi.on('click', function () {
+                    $slider.find('.active').removeClass('active');
+                    var attribute = $(this).attr('data-pos');
+                    $('[data-pos="'+attribute+'"]').addClass('active');
+                    $slides.css({'margin-left':-attribute+'px'});
+                  });
+
+                  // change slides by click on arrows
+                  var $leftArrow = $('.leftArrow'),
+                      $rightArrow = $('.rightArrow');
+
+                      $rightArrow.on('click', function () {
+
+                        var attribute = $slides.find('.active').next().attr('data-pos');
+                        if (attribute === undefined) {
+                          attribute = 0;
+                        }
+                        $slider.find('.active').removeClass('active');
+                        $('[data-pos="'+attribute+'"]').addClass('active');
+
+                        $slides.css({'margin-left':-attribute+'px'});
+                      });
+
+                      $leftArrow.on('click', function () {
+
+                        var attribute = $slides.find('.active').prev().attr('data-pos');
+                        if (attribute === undefined) {
+                          attribute = $('.slider').width()*(liNumber-1);
+                        }
+                        $slider.find('.active').removeClass('active');
+                        $('[data-pos="'+attribute+'"]').addClass('active');
+
+                        $slides.css({'margin-left':-attribute+'px'});
+                      });
+
+
+
+
+            }()); // drive slider work
 
 
   }); //end ready
