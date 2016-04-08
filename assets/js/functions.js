@@ -1,13 +1,23 @@
 var slider = (function() {
 
+  var
+    flag = true,
+    timerDuration = 3000,
+    timer = 0;
+
   return {
 
     init: function() {
 
       var that = this;
 
+      that.createDots();
+
+      // switch on autoswitch
+      that.autoSwitch();
+
       $('.control-button').on('click', function() {
-        console.log('heloo');
+
         var $this = $(this),
         slides = $this.closest('.slider').find('.slider-item'),
         active = slides.filter('.active'),
@@ -16,17 +26,48 @@ var slider = (function() {
         first = slides.first(),
         last = slides.last();
 
-        if ( $('.rightArrow') ) {
+        if ( $this.hasClass('rightArrow') ) {
 
-          that.moveSlide(nextSlide, 'forward');
+          if (nextSlide.length) {
 
-        } else if ( $('.leftArrow') ) {
+            that.moveSlide(nextSlide, 'forward');  
 
-          that.moveSlide(prevSlide, 'backward');
+          } else {
+
+              that.moveSlide(first, 'forward');
+
+          }
+
+        } else {
+
+          if (prevSlide.length) {
+            that.moveSlide(prevSlide, 'backward');  
+          } else {
+              that.moveSlide(last, 'backward');
+          }
 
         }
 
+        that.clearTimer();
 
+      });
+
+      $('.buttons').on('click', function() {
+
+        var
+          $this = $(this),
+          dots = $this.closest('.bottom-buttons').find('.buttons'),
+          activeDot = dots.filter('.active'),
+          dot = $this,
+          direction = (activeDot.index() < dot.index()) ? 'forward' : 'backward',
+          reqSlide = $this.closest('.slider').find('.slider-item').eq(dot.index());
+
+          if ( !$this.hasClass('active') ) {
+            that.moveSlide(reqSlide, direction);
+          }
+
+
+          that.clearTimer();
       });
 
     },
@@ -34,13 +75,18 @@ var slider = (function() {
     moveSlide: function(slide, direction) {
 
       var
-        slider = slide.closest('.slider'),
-        slides = slider.find('.slider-item'),
-        activeSlide = slides.filter('.active'),
-        slideWidth = slides.width(),
-        duration = 500,
-        reqCssPositon = 0,
-        reqSlideStrafe = 0;
+      that = this,
+      slider = slide.closest('.slider'),
+      slides = slider.find('.slider-item'),
+      activeSlide = slides.filter('.active'),
+      slideWidth = slides.width(),
+      duration = 500,
+      reqCssPositon = 0,
+      reqSlideStrafe = 0;
+
+      if (flag) {
+
+        flag = false;
 
         if (direction === 'forward') {
 
@@ -63,14 +109,92 @@ var slider = (function() {
 
           var $this = $(this);
 
-          slide.css({'left': '0'}).removeClass('active');
+          slides.css({'left': '0'}).removeClass('active');
           $this.toggleClass('inslide active');
+
+          that.setActiveDot(slider.find('.bottom-buttons'));
+
+          flag = true;
 
         });
 
+      }
+
+    },
+
+    createDots: function() {
+
+      var 
+        that = this,
+        slider = $('.slider'),
+        dotMarkUp = '<li class="buttons"></li>';
+
+        slider.each(function() {
+          var
+            $this = $(this),
+            slides = $this.find('.slider-item'),
+            bottomButtons = $this.find('.bottom-buttons');
+
+            for (var i = 0; i < slides.length; i++) {
+              bottomButtons.append(dotMarkUp);  
+            } 
+
+            that.setActiveDot(bottomButtons);
+        });
+
+    },
+
+    setActiveDot: function(bottomButtons) {
+      var
+        ulSlides = $('.slider'),
+        slides = bottomButtons.closest(ulSlides).find('.slider-item');
+
+        bottomButtons
+          .find( $('.buttons') )
+          .eq( slides.filter('.active').index() )
+          .addClass('active')
+          .siblings()
+          .removeClass('active');
+    },
+
+    autoSwitch: function() {
+
+      var
+      that = this,
+
+      timer = setInterval(function() {
+
+        // var
+        // slides = $('.slides .slider-item'),
+        // active = slides.filter('.active'),
+        // nextSlide = active.next(),
+        // first = slides.first();
+
+        // if (nextSlide.length) {
+
+        //   that.moveSlide(nextSlide, 'forward');
+
+        // } else {
+
+        //   that.moveSlide(first, 'forward');
+
+        // }
+
+        console.log('heloo');
+
+      }, timerDuration);
+
+    },
+
+    clearTimer: function() {
+
+        clearInterval(timer); 
+
     }
 
+
   }
+
 
 }());
 

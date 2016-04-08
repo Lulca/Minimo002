@@ -43,7 +43,7 @@
 
 .slider {
 	position: relative;
-	
+	overflow: hidden;
 
 	.slides {
 		position: relative;
@@ -124,6 +124,7 @@
 			bottom: 10px;
 			left: 50%;
 			transform:translate(-50%,0);
+			z-index: 100000;
 
 			@widthOfButtons: 18px;
 
@@ -137,18 +138,20 @@
 				border: 3px solid #fff;
 				.transition();
 
+
 				&:hover {
 					cursor: pointer;
+					border-color: #000;
+				}
+
+				&:first-child {
+					margin-left: 0;
 				}
 			}
 
 			.active {
 				background-color: #fff;
-			}
-
-			.button1 {
-				margin-left: 0;
-			}
+			}		
 		}
 
 } // slider
