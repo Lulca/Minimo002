@@ -1,8 +1,4 @@
-(function ($) {
 
-
-	'use strict';
-    // begin ready
 	$(document).ready(function () {
 
     // drive nav
@@ -47,5 +43,3 @@
      
   }); //end ready
 
-
-}(jQuery));
