@@ -14,7 +14,7 @@
 		
 		.horizontal-nav{
 			float: right;
-			z-index: 100;
+			z-index: 1000;
 
 			li {
 				display: inline-block;
@@ -42,21 +42,46 @@
 // slider
 
 .slider {
-	overflow: hidden;
 	position: relative;
+	overflow: hidden;
+
+	&:hover {
+		.transition();
+
+		.leftArrow .icon-arrow-circle-left{
+			opacity: 1;
+
+		}
+
+		.rightArrow .icon-arrow-circle-right {
+			opacity: 1;
+		}
+
+	}
 
 	.slides {
-		width: 300%;
-		overflow: hidden;
-		transition: all 1s ease-in;
+		position: relative;
+		width: 100%;
 
-		li {
-			float: left;
-			width: 33.33333333%;
+		.slider-item {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 0;
+			width: 100%;
 
 			img {
 				width: 100%;
 				height: auto;	
+			}
+
+			&.active {
+				z-index: 1;
+				position: relative;
+			}
+
+			&.inslide {
+				z-index: 2;
 			}
 		}	
 	}
@@ -68,12 +93,16 @@
 			height: 100%;
 			width: 60px;
 			.transition();
+			z-index: 999;
 
 			.icon-arrow-circle-left {
 				position: absolute;
 				font-size: 30px;
 				left: 15px;
 				top: 45%;
+				z-index: 1000;
+				opacity: 0;
+				.transition();
 			}
 
 			&:hover {
@@ -89,12 +118,16 @@
 			height: 100%;
 			width: 60px;
 			.transition();
+			z-index: 999;
 
 			.icon-arrow-circle-right {
 				position: absolute;
 				font-size: 30px;
 				right: 15px;
 				top: 45%;
+				z-index: 1000;
+				opacity: 0;
+				.transition();
 			}
 
 			&:hover {
@@ -109,10 +142,12 @@
 			bottom: 10px;
 			left: 50%;
 			transform:translate(-50%,0);
+			z-index: 100000;
 
 			@widthOfButtons: 18px;
 
 			.buttons {
+				.transition();
 				background-color: #000;
 				height: @widthOfButtons;
 				width: @widthOfButtons;
@@ -122,34 +157,23 @@
 				border: 3px solid #fff;
 				.transition();
 
+
 				&:hover {
 					cursor: pointer;
+					border-color: #000;
+				}
+
+				&:first-child {
+					margin-left: 0;
 				}
 			}
 
 			.active {
 				background-color: #fff;
-			}
-
-			.button1 {
-				margin-left: 0;
-			}
+			}		
 		}
 
 } // slider
-
-// section The perfect weekend
-.perfect-weekend {
-	
-
-	p {
-		
-	}
-
-	
-}
-
-// section The perfect weekend 
 
 // posts
 
