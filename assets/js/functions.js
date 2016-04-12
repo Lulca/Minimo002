@@ -57,7 +57,7 @@ var slider = (function() {
   var
     flag = true,
     timerDuration = 3000,
-    timer;
+    timerAuto = 0;
 
   return {
 
@@ -102,7 +102,7 @@ var slider = (function() {
 
         }
 
-        clearInterval(timer);
+        that.clearTimer();
 
       });
 
@@ -121,7 +121,7 @@ var slider = (function() {
           }
 
 
-          clearInterval(timer)
+          that.clearTimer()
       });
 
     },
@@ -214,9 +214,9 @@ var slider = (function() {
     autoSwitch: function() {
 
       var
-      that = this,
+      that = this;
 
-      timer = setInterval(function() {
+      timerAuto = window.setInterval(function() {
 
         var
         slides = $('.slides .slider-item'),
@@ -239,9 +239,11 @@ var slider = (function() {
     },
 
     clearTimer: function() {
-        console.log('start');
-        clearInterval(timer); 
-        console.log('end');
+
+      var that = this;
+      
+        clearInterval(timerAuto); 
+        that.autoSwitch();
     }
 
 
@@ -250,11 +252,55 @@ var slider = (function() {
 
 }());
 
+
+var ajax = (function() {
+
+  var page = 0;
+
+  return {
+    load: function() {
+
+      var
+        that = this,
+        btnLoad = $('.load').find('.btn-load');
+
+        btnLoad.on('click', function() {
+          var url = "content" +page+ ".html";
+
+          $.ajax({
+            url: url,
+
+            success: function(response) {
+              that.append(response);
+              page++;
+            },
+
+            error: function() {
+              alert("content can't be downloaded");
+            }
+
+          });
+        });
+    },
+
+    append: function(response) {
+
+      var 
+        posts = $('.posts').last();
+
+        $(response).appendTo(posts);
+    } 
+  }
+
+}());
+
 $(document).ready(function() {
 
   siteNav.siteNavInit();
 
   slider.init();
+
+  ajax.load();
 
 });
 

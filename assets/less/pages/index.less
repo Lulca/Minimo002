@@ -14,7 +14,7 @@
 		
 		.horizontal-nav{
 			float: right;
-			z-index: 1000;
+			z-index: 100001;
 
 			li {
 				display: inline-block;
@@ -32,6 +32,10 @@
 					&:hover {
 						background-color: #dddce4;
 					}
+
+					&.active {
+						background-color: #dddce4;
+					}
 				}
 			}
 		}
@@ -44,6 +48,9 @@
 .slider {
 	position: relative;
 	overflow: hidden;
+	max-height: 600px;
+	border: 10px solid #f0f0f0;
+	border-radius: 5px;
 
 	&:hover {
 		.transition();
@@ -252,6 +259,10 @@
 
 		&:hover {
 			background-color: #f0f0f0;
+		}
+
+		&:focus {
+			outline: none;
 		}
 	}
 
