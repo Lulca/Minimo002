@@ -56,7 +56,7 @@ var slider = (function() {
 
   var
     flag = true,
-    timerDuration = 3000,
+    timerDuration = 4000,
     timerAuto = 0;
 
   return {
